@@ -5,9 +5,9 @@ class ShoppingCart:
     """
 
     DISCOUNT_CODES = {
-        "SAVE10": {"type": "percent", "value": 10,  "min_order": 0.0},
-        "SAVE20": {"type": "percent", "value": 20,  "min_order": 50.0},
-        "FLAT5":  {"type": "fixed",   "value": 5.0, "min_order": 30.0},
+        "SAVE10": {"type": "percent", "value": 10, "min_order": 0.0},
+        "SAVE20": {"type": "percent", "value": 20, "min_order": 50.0},
+        "FLAT5": {"type": "fixed", "value": 5.0, "min_order": 30.0},
     }
 
     def __init__(self):
@@ -50,7 +50,7 @@ class ShoppingCart:
         discount = self.DISCOUNT_CODES[code]
         subtotal = self._subtotal()
 
-        if subtotal > discount["min_order"]:
+        if subtotal >= discount["min_order"]:
             self._discount = discount
         else:
             raise ValueError(
@@ -88,10 +88,9 @@ class ShoppingCart:
 
         This method is not implemented yet.
         """
-        raise NotImplementedError("get_item_count() is not implemented yet.")
+        raise NotImplementedError(
+            "get_item_count() is not implemented yet."
+        )
 
     def _subtotal(self) -> float:
-        return sum(
-            item["price"] * item["quantity"]
-            for item in self._items.values()
-        )
+        return sum(item["price"] * item["quantity"] for item in self._items.values())
